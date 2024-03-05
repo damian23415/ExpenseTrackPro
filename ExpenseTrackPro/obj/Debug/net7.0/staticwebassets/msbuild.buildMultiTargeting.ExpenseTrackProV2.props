@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\ExpenseTrackProV2.props" />
+</Project>
