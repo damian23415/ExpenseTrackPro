@@ -1,9 +1,14 @@
-﻿using Application.DTOs;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Application.DTOs;
 using Application.Enums;
 using Application.Exceptions;
 using Application.Interfaces;
 using Application.Wrappers;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Persistance.IdentityModels;
 
 namespace Persistance.SharedServices;
@@ -11,10 +16,12 @@ namespace Persistance.SharedServices;
 public class AccountService : IAccountService
 {
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IConfiguration _configuration;
     
-    public AccountService(UserManager<ApplicationUser> userManager)
+    public AccountService(UserManager<ApplicationUser> userManager, IConfiguration configuration)
     {
         _userManager = userManager;
+        _configuration = configuration;
     }
 
     public async Task<ApiResponse<Guid>> RegisterUser(RegisterRequest registerRequest)
@@ -44,5 +51,67 @@ public class AccountService : IAccountService
         }
 
         throw new ApiException(result.Errors.ToString());
+    }
+
+    public async Task<ApiResponse<AuthenticationResponse>> Authenticate(AuthenticationRequest request)
+    {
+        var user = await _userManager.FindByEmailAsync(request.Email);
+
+        if (user == null)
+            throw new ApiException($"User not registered with this email: {request.Email}");
+
+        var succeded = await _userManager.CheckPasswordAsync(user, request.Password);
+        
+        if (!succeded)
+            throw new ApiException($"Invalid email or password");
+
+        var jwtSecurity = await GenerateToken(user);
+        var authenticationResponse = new AuthenticationResponse();
+
+        authenticationResponse.Id = user.Id;
+        authenticationResponse.UserName = user.UserName;
+        authenticationResponse.Email = user.Email;
+        authenticationResponse.IsVerified = user.EmailConfirmed;
+
+        var roles = await _userManager.GetRolesAsync(user);
+
+        authenticationResponse.Roles = roles.ToList();
+        authenticationResponse.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurity);
+
+        return new ApiResponse<AuthenticationResponse>(authenticationResponse, "User authenticated");
+    }
+
+    private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)
+    {
+        var dbClaim = await _userManager.GetClaimsAsync(user);
+        var roles = await _userManager.GetRolesAsync(user);
+
+        var roleClaims = new List<Claim>();
+
+        for (int i = 0; i < roles.Count; i++)
+        {
+            roleClaims.Add(new Claim("roles", roles[i]));
+        }
+        
+        var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim("uid", user.Id.ToString()),
+            }
+            .Union(dbClaim)
+            .Union(roleClaims);
+
+        var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Key"]));
+        var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+
+        var jwtSecurityToken = new JwtSecurityToken(
+            issuer: _configuration["JwtSettings:Issuer"],
+            audience: _configuration["JwtSettings:Audience"],
+            claims: claims,
+            expires: DateTime.UtcNow.AddMinutes(Convert.ToInt32(_configuration["JwtSettings:DurationInMinutes"])),
+            signingCredentials: signingCredentials);
+        return jwtSecurityToken;
     }
 }
