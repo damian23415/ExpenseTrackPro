@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerExtension();
-
+builder.Services.AddCors();
 
 builder.Services.AddPersistance(builder.Configuration);
 
@@ -73,4 +73,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.UseCors(x =>
+    x.AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowAnyOrigin());
 app.Run();

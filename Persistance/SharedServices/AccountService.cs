@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using Application.DTOs;
@@ -29,7 +30,7 @@ public class AccountService : IAccountService
         var user = await _userManager.FindByEmailAsync(registerRequest.Email);
 
         if (user != null)
-            throw new ApiException($"User already exist {registerRequest.Email}");
+            return new ApiResponse<Guid>(HttpStatusCode.Conflict, ErrorCode.AccountWithEmailAlreadyExist);
 
         var userModel = new ApplicationUser()
         {
@@ -49,7 +50,7 @@ public class AccountService : IAccountService
             await _userManager.AddToRoleAsync(userModel, Roles.Basic.ToString());
             return new ApiResponse<Guid>(userModel.Id, "User register successfuly");
         }
-
+        
         throw new ApiException(result.Errors.ToString());
     }
 
