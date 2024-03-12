@@ -47,7 +47,7 @@ const SignupForm = () => {
     // ✅ This will be type-safe and validated.
     let parsedErrors: any;
 
-    const response = await SignUp(values)
+    await SignUp(values)
       .then((response: AxiosResponse) => {
         console.log(response);
         let errorMessage: any;
