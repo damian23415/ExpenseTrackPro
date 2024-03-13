@@ -20,7 +20,6 @@ import { SignUp } from "../api/Helper.js";
 import { useToast } from "@/components/ui/use-toast";
 import { AxiosError, AxiosResponse } from "axios";
 import { ErrorTypes } from "@/constants/errorTypes.js";
-import React from "react";
 
 const SignupForm = () => {
   const { toast } = useToast();

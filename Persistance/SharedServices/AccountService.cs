@@ -59,12 +59,12 @@ public class AccountService : IAccountService
         var user = await _userManager.FindByEmailAsync(request.Email);
 
         if (user == null)
-            throw new ApiException($"User not registered with this email: {request.Email}");
+            return new ApiResponse<AuthenticationResponse>(HttpStatusCode.BadRequest, ErrorCode.AccountWithEmailNotExist);
 
         var succeded = await _userManager.CheckPasswordAsync(user, request.Password);
         
         if (!succeded)
-            throw new ApiException($"Invalid email or password");
+            return new ApiResponse<AuthenticationResponse>(HttpStatusCode.Unauthorized, ErrorCode.InvalidEmailOrPassword);
 
         var jwtSecurity = await GenerateToken(user);
         var authenticationResponse = new AuthenticationResponse();
