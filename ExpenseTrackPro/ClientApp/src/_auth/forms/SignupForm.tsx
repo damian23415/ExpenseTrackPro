@@ -2,7 +2,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
 
-import { Toaster } from "@/components/ui/toaster";
 import {
   Form,
   FormControl,
@@ -21,6 +20,7 @@ import { SignUp } from "../api/Helper.js";
 import { useToast } from "@/components/ui/use-toast";
 import { AxiosError, AxiosResponse } from "axios";
 import { ErrorTypes } from "@/constants/errorTypes.js";
+import React from "react";
 
 const SignupForm = () => {
   const { toast } = useToast();
@@ -39,14 +39,7 @@ const SignupForm = () => {
     },
   });
 
-  // 1. Define your form.
-
-  // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof SignupValidation>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    let parsedErrors: any;
-
     await SignUp(values)
       .then((response: AxiosResponse) => {
         console.log(response);
@@ -60,12 +53,37 @@ const SignupForm = () => {
           return toast({
             title: response.data.statusCode,
             description: errorMessage,
+            toastContainerStyles:
+              "absolute bottom-4 right-4 gap-2 bg-red p-1.5 rounded-lg shadow-lg",
+            toastTitleStyles: "text-xs mb-2",
+            toastDescriptionStyles: "text-base",
+            toastCloseStyles: "absolute bottom-8 right-1",
           });
+        } else {
+          {
+            errorMessage = "Account created";
+            console.log(errorMessage);
+            return toast({
+              title: response.data.statusCode,
+              description: errorMessage,
+              toastContainerStyles:
+                "absolute bottom-4 right-4 gap-2 bg-lime-600 p-1.5 rounded-lg shadow-lg",
+              toastTitleStyles: "text-xs mb-2",
+              toastDescriptionStyles: "text-base",
+              toastCloseStyles: "absolute bottom-8 right-1",
+            });
+          }
         }
       })
       .catch((err: AxiosError) => {
+        console.log(err.response);
         return toast({
-          title: "Something went wrong",
+          description: "Something went wrong",
+          toastContainerStyles:
+            "absolute bottom-4 right-4 gap-2 bg-red p-2 rounded-lg shadow-lg",
+          toastTitleStyles: "text-xs mb-2",
+          toastDescriptionStyles: "text-base",
+          toastCloseStyles: "none",
         });
       });
   }
