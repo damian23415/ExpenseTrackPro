@@ -2,7 +2,6 @@
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -18,10 +17,21 @@ import { AxiosResponse } from "axios";
 import { ErrorTypes } from "@/constants/errorTypes";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "@/store/UserSlice";
 
 const SinginForm = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  //states
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  //redux state
+
+  const dispatch = useDispatch<any>();
 
   const form = useForm<z.infer<typeof SigninValidation>>({
     resolver: zodResolver(SigninValidation),
@@ -31,10 +41,12 @@ const SinginForm = () => {
     },
   });
 
+  let formData = { email, password };
+  dispatch(loginUser(formData));
+
   async function onSubmit(values: z.infer<typeof SigninValidation>) {
     await SignIn(values).then((response: AxiosResponse) => {
       let errorMessage: any;
-
       if (response.data.errorCode === ErrorTypes.AccountWithEmailNotExist) {
         errorMessage = "Account with given email not exists in system";
         return toast({
@@ -96,7 +108,13 @@ const SinginForm = () => {
               <FormItem className="flex flex-col">
                 <FormLabel>E-mail</FormLabel>
                 <FormControl>
-                  <Input type="email" className="shad-input" {...field} />
+                  <Input
+                    type="email"
+                    className="shad-input"
+                    {...field}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -109,7 +127,13 @@ const SinginForm = () => {
               <FormItem className="flex flex-col">
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" className="shad-input" {...field} />
+                  <Input
+                    type="password"
+                    className="shad-input"
+                    {...field}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
