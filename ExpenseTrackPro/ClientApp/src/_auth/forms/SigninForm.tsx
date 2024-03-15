@@ -12,25 +12,16 @@ import { SigninValidation } from "@/lib/validation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { SignIn } from "../api/Helper";
 import { AxiosResponse } from "axios";
 import { ErrorTypes } from "@/constants/errorTypes";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "@/store/UserSlice";
 
 const SinginForm = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
-
-  //states
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  //redux state
-
   const dispatch = useDispatch<any>();
 
   const form = useForm<z.infer<typeof SigninValidation>>({
@@ -41,16 +32,14 @@ const SinginForm = () => {
     },
   });
 
-  let formData = { email, password };
-  dispatch(loginUser(formData));
-
   async function onSubmit(values: z.infer<typeof SigninValidation>) {
-    await SignIn(values).then((response: AxiosResponse) => {
+    dispatch(loginUser(values)).then((response: any) => {
       let errorMessage: any;
-      if (response.data.errorCode === ErrorTypes.AccountWithEmailNotExist) {
+
+      if (response.payload.errorCode === ErrorTypes.AccountWithEmailNotExist) {
         errorMessage = "Account with given email not exists in system";
         return toast({
-          title: response.data.statusCode,
+          title: response.payload.statusCode,
           description: errorMessage,
           toastContainerStyles:
             "absolute bottom-4 right-4 gap-2 bg-red p-1.5 rounded-lg shadow-lg",
@@ -59,11 +48,11 @@ const SinginForm = () => {
           toastCloseStyles: "absolute bottom-8 right-1",
         });
       } else if (
-        response.data.errorCode === ErrorTypes.InvalidEmailOrPassword
+        response.payload.errorCode === ErrorTypes.InvalidEmailOrPassword
       ) {
         errorMessage = "Invalid email or password";
         return toast({
-          title: response.data.statusCode,
+          title: response.payload.statusCode,
           description: errorMessage,
           toastContainerStyles:
             "absolute bottom-4 right-4 gap-2 bg-red p-1.5 rounded-lg shadow-lg",
@@ -75,7 +64,7 @@ const SinginForm = () => {
         errorMessage = "Successfully logged in";
 
         toast({
-          title: response.data.statusCode,
+          title: response.payload.statusCode,
           description: errorMessage,
           toastContainerStyles:
             "absolute bottom-4 right-4 gap-2 bg-lime-600 p-1.5 rounded-lg shadow-lg",
@@ -108,13 +97,7 @@ const SinginForm = () => {
               <FormItem className="flex flex-col">
                 <FormLabel>E-mail</FormLabel>
                 <FormControl>
-                  <Input
-                    type="email"
-                    className="shad-input"
-                    {...field}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+                  <Input type="email" className="shad-input" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -127,13 +110,7 @@ const SinginForm = () => {
               <FormItem className="flex flex-col">
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
-                    type="password"
-                    className="shad-input"
-                    {...field}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
+                  <Input type="password" className="shad-input" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
