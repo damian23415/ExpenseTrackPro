@@ -1,9 +1,12 @@
 ﻿import React from "react";
+import { Outlet } from "react-router-dom";
 
 const RootLayout = () => {
-    return (
-        <div>RootLayout</div>
-    )
-}
+  return (
+    <section className="flex flex-1 h-full">
+      <Outlet />
+    </section>
+  );
+};
 
-export default RootLayout
+export default RootLayout;

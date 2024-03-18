@@ -8,6 +8,7 @@ import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import EditUserForm from "./_root/pages/UserManagement/Form/EditUserForm";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         {/* private routes*/}
         <Route element={<RootLayout />}>
           <Route index element={<Home />} />
+          <Route path="/edit-user" element={<EditUserForm />} />
         </Route>
       </Routes>
 

@@ -12,12 +12,11 @@ import { SigninValidation } from "@/lib/validation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { AxiosResponse } from "axios";
 import { ErrorTypes } from "@/constants/errorTypes";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "@/store/UserSlice";
+import { loginUser } from "@/store/userSlice";
 
 const SinginForm = () => {
   const { toast } = useToast();
@@ -35,7 +34,6 @@ const SinginForm = () => {
   async function onSubmit(values: z.infer<typeof SigninValidation>) {
     dispatch(loginUser(values)).then((response: any) => {
       let errorMessage: any;
-
       if (response.payload.errorCode === ErrorTypes.AccountWithEmailNotExist) {
         errorMessage = "Account with given email not exists in system";
         return toast({
@@ -73,7 +71,7 @@ const SinginForm = () => {
           toastCloseStyles: "absolute bottom-8 right-1",
         });
 
-        navigate("/");
+        //navigate("/");
         return;
       }
     });

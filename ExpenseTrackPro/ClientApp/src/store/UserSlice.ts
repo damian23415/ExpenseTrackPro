@@ -7,6 +7,7 @@ export const loginUser = createAsyncThunk(
     const request = await SignIn(formData);
     const response = await request.data;
     localStorage.setItem("user", JSON.stringify(response));
+    localStorage.setItem("jwtToken", request.data.data.jwToken);
     return response;
   }
 );
