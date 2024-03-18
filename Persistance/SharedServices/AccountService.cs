@@ -25,25 +25,25 @@ public class AccountService : IAccountService
         _configuration = configuration;
     }
 
-    public async Task<ApiResponse<Guid>> RegisterUser(RegisterRequest registerRequest)
+    public async Task<ApiResponse<Guid>> RegisterUser(UserRegisterRequest userRegisterRequest)
     {
-        var user = await _userManager.FindByEmailAsync(registerRequest.Email);
+        var user = await _userManager.FindByEmailAsync(userRegisterRequest.Email);
 
         if (user != null)
             return new ApiResponse<Guid>(HttpStatusCode.Conflict, ErrorCode.AccountWithEmailAlreadyExist);
 
         var userModel = new ApplicationUser()
         {
-            UserName = registerRequest.UserName,
-            Email = registerRequest.Email,
-            FirstName = registerRequest.FirstName,
-            LastName = registerRequest.LastName,
-            Gender = registerRequest.Gender,
+            UserName = userRegisterRequest.UserName,
+            Email = userRegisterRequest.Email,
+            FirstName = userRegisterRequest.FirstName,
+            LastName = userRegisterRequest.LastName,
+            Gender = userRegisterRequest.Gender,
             EmailConfirmed = true,
             PhoneNumberConfirmed = true
         };
 
-        var result = await _userManager.CreateAsync(userModel, registerRequest.Password);
+        var result = await _userManager.CreateAsync(userModel, userRegisterRequest.Password);
 
         if (result.Succeeded)
         {
@@ -80,6 +80,26 @@ public class AccountService : IAccountService
         authenticationResponse.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurity);
 
         return new ApiResponse<AuthenticationResponse>(authenticationResponse, "User authenticated");
+    }
+
+    public async Task<ApiResponse<Guid>> EditUser(UserEditRequest request)
+    {
+        var user = await _userManager.FindByEmailAsync(request.Email);
+
+        if (user == null)
+            return new ApiResponse<Guid>(HttpStatusCode.NotFound, ErrorCode.AccountWithEmailNotExist);
+
+        user.FirstName = request.FirstName;
+        user.LastName = request.LastName;
+        user.UserName = request.UserName;
+        user.Email = request.Email;
+    
+        var result = await _userManager.UpdateAsync(user);
+
+        if (!result.Succeeded)
+            throw new ApiException(result.Errors.ToString());
+
+        return new ApiResponse<Guid>(user.Id, "User edited succesfully");
     }
 
     private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)

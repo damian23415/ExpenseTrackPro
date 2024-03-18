@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseTrackProV2.Controllers;
@@ -24,9 +25,18 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("RegisterUser")]
-    public async Task<IActionResult> RegisterUser(RegisterRequest registerModel, CancellationToken cancellationToken)
+    public async Task<IActionResult> RegisterUser(UserRegisterRequest userRegisterModel, CancellationToken cancellationToken)
     {
-        var result = await _accountService.RegisterUser(registerModel);
+        var result = await _accountService.RegisterUser(userRegisterModel);
+
+        return Ok(result);
+    }
+
+    [Authorize]
+    [HttpPost("EditUser")]
+    public async Task<IActionResult> EditUser(UserEditRequest userEditModel, CancellationToken cancellationToken)
+    {
+        var result = await _accountService.EditUser(userEditModel);
 
         return Ok(result);
     }

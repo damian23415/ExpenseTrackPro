@@ -2,7 +2,7 @@
 
 namespace Application.DTOs;
 
-public class RegisterRequest
+public class UserRegisterRequest
 {
     [Required]
     public string FirstName { get; set; }
