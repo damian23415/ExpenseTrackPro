@@ -6,7 +6,7 @@
 
 ## General info
 
-<summary>The ExpenseTrackPro app is created to learn front-end technologies (like a react.js) and expenad knowledge of .net. The application will be used to manage home finances.</summary>
+The ExpenseTrackPro app is created to learn front-end technologies (like a react.js) and expenad knowledge of .net. The application will be used to manage home finances.
 
 ## Technologies
 
