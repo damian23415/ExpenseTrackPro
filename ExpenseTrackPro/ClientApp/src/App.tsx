@@ -22,7 +22,7 @@ const App = () => {
 
         {/* private routes*/}
         <Route element={<RootLayout />}>
-          <Route index element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/edit-user" element={<EditUserForm />} />
         </Route>
       </Routes>

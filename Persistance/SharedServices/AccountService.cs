@@ -72,6 +72,8 @@ public class AccountService : IAccountService
         authenticationResponse.Id = user.Id;
         authenticationResponse.UserName = user.UserName;
         authenticationResponse.Email = user.Email;
+        authenticationResponse.FirstName = user.FirstName;
+        authenticationResponse.LastName = user.LastName;
         authenticationResponse.IsVerified = user.EmailConfirmed;
 
         var roles = await _userManager.GetRolesAsync(user);
