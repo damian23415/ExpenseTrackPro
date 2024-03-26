@@ -9,10 +9,12 @@ import RootLayout from "./_root/RootLayout";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import EditUserForm from "./_root/pages/UserManagement/Form/EditUserForm";
+import Dashboard from "./_root/pages/Business/Dashboard";
+import Transactions from "./_root/pages/Business/Transactions";
 
 const App = () => {
   return (
-    <main className="flex h-screen">
+    <main className="flex h-screen bg-[#F1F1F1]">
       <Routes>
         {/* public routes*/}
         <Route element={<AuthLayout />}>
@@ -24,6 +26,8 @@ const App = () => {
         <Route element={<RootLayout />}>
           <Route path="/home" element={<Home />} />
           <Route path="/edit-user" element={<EditUserForm />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/transactions" element={<Transactions />} />
         </Route>
       </Routes>
 

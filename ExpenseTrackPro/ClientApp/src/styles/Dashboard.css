@@ -1,0 +1,11 @@
+.general-element {
+  @apply bg-white basis-1/3 m-5 text-[#424242] !important;
+}
+
+.text-dark {
+  @apply text-[#424242] !important;
+}
+
+.menu-item {
+  @apply text-[#f1f1f1] mt-2 !important;
+}

@@ -20,4 +20,8 @@ The ExpenseTrackPro app is created to learn front-end technologies (like a react
 
 ## Current status of work
 
-I'm currently in the process of preparing an authorization mechanizm based on IdentityDbContext with jwtToken. Due to previous experience, the server part of the application was completed quite quickly. I am currently learning and refining individual elements of the application in React.js
+I'm currently working on the main apperance of the application and adding further capabilities on the server side.
+
+## Work status history
+
+- I'm currently in the process of preparing an authorization mechanizm based on IdentityDbContext with jwtToken. Due to previous experience, the server part of the application was completed quite quickly. I am currently learning and refining individual elements of the application in React.js
