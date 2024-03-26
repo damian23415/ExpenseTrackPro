@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Entities.Identity;
 
-namespace Persistance.IdentityModels;
+namespace Domain.Entities;
 
 public class Expenses
 {

@@ -1,7 +1,8 @@
 ﻿using Application.Interfaces;
+using Domain.Entities;
+using Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Persistance.IdentityModels;
 
 namespace Persistance.Context;
 
@@ -14,7 +15,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     
     public DbSet<Categories> Categories { get; set; }
     public DbSet<Expenses> Expenses { get; set; }
-
+    
     public async Task<int> SaveChangesAsync()
     {
         return await base.SaveChangesAsync();

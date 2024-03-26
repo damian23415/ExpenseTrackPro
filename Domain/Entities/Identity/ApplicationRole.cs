@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Persistance.IdentityModels;
+namespace Domain.Entities.Identity;
 
 public class ApplicationRole : IdentityRole<Guid>
 {

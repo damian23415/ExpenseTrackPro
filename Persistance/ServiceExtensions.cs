@@ -1,10 +1,10 @@
 ﻿using Application.Interfaces;
+using Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistance.Context;
-using Persistance.IdentityModels;
 using Persistance.Seeds;
 using Persistance.SharedServices;
 

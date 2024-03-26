@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Persistance.IdentityModels;
+namespace Domain.Entities;
 
 public class Categories
 {

@@ -1,7 +1,7 @@
 ﻿using Application.Enums;
+using Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using Persistance.IdentityModels;
 
 namespace Persistance.Seeds;
 

@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 
-namespace Persistance.IdentityModels;
+namespace Domain.Entities.Identity;
 
 public class ApplicationUser : IdentityUser<Guid>
 {
