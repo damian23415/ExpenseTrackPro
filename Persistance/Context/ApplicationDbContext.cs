@@ -11,6 +11,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     {
 
     }
+    
+    public DbSet<Categories> Categories { get; set; }
+    public DbSet<Expenses> Expenses { get; set; }
 
     public async Task<int> SaveChangesAsync()
     {
