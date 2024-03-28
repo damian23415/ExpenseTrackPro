@@ -4,15 +4,17 @@ using System.Security.Claims;
 using System.Text;
 using ExpenseTraackPro.Domain.Entities.Identity;
 using ExpenseTrackPro.Application.DTOs;
+using ExpenseTrackPro.Application.DTOs.Auth;
+using ExpenseTrackPro.Application.DTOs.User;
 using ExpenseTrackPro.Application.Enums;
 using ExpenseTrackPro.Application.Exceptions;
-using ExpenseTrackPro.Application.Interfaces;
 using ExpenseTrackPro.Application.Wrappers;
+using ExpenseTrackPro.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace ExpenseTrackPro.Infrastructure.SharedServices;
+namespace ExpenseTrackPro.Infrastructure.Services.Implementations;
 
 public class AccountService : IAccountService
 {

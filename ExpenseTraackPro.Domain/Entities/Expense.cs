@@ -4,7 +4,7 @@ using ExpenseTraackPro.Domain.Entities.Identity;
 
 namespace ExpenseTraackPro.Domain.Entities;
 
-public class Expenses
+public class Expense
 {
     [Key]
     public Guid IncomeId {get; set;}
@@ -24,7 +24,7 @@ public class Expenses
     
     //RelationShip
     [ForeignKey("CategoryId")]
-    public Categories Categories { get; set; }
+    public Category Category { get; set; }
     
     [ForeignKey("UserId")]
     public ApplicationUser ApplicationUsers { get; set; }

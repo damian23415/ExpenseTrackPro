@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ExpenseTraackPro.Domain.Entities;
 
-public class Categories
+public class Category
 {
     [Key]
     public Guid CategoryId { get; set; }
@@ -10,5 +10,5 @@ public class Categories
     public string CategoryName { get; set; }
     
     //RelationShips
-    public ICollection<Expenses> Expenses { get; set; }
+    public ICollection<Expense> Expenses { get; set; }
 }

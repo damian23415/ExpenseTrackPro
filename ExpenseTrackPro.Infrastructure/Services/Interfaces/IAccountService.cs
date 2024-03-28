@@ -1,7 +1,9 @@
 ﻿using ExpenseTrackPro.Application.DTOs;
+using ExpenseTrackPro.Application.DTOs.Auth;
+using ExpenseTrackPro.Application.DTOs.User;
 using ExpenseTrackPro.Application.Wrappers;
 
-namespace ExpenseTrackPro.Application.Interfaces;
+namespace ExpenseTrackPro.Infrastructure.Services.Interfaces;
 
 public interface IAccountService
 {

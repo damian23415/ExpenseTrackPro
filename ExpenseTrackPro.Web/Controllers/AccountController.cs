@@ -1,5 +1,7 @@
 ﻿using ExpenseTrackPro.Application.DTOs;
-using ExpenseTrackPro.Application.Interfaces;
+using ExpenseTrackPro.Application.DTOs.Auth;
+using ExpenseTrackPro.Application.DTOs.User;
+using ExpenseTrackPro.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

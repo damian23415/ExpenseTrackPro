@@ -1,4 +1,4 @@
-namespace ExpenseTrackPro.Application.DTOs;
+namespace ExpenseTrackPro.Application.DTOs.User;
 
 public class UserEditRequest
 {

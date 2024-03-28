@@ -10,5 +10,5 @@ public class ApplicationUser : IdentityUser<Guid>
     public string Gender { get; set; }
     
     //RelationShips
-    public ICollection<Expenses> Expenses { get; set; }
+    public ICollection<Expense> Expenses { get; set; }
 }

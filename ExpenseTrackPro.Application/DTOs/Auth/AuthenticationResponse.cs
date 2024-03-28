@@ -1,4 +1,4 @@
-﻿namespace ExpenseTrackPro.Application.DTOs;
+﻿namespace ExpenseTrackPro.Application.DTOs.Auth;
 
 public class AuthenticationResponse
 {
