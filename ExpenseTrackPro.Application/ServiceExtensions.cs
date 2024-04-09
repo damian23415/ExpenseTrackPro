@@ -6,7 +6,7 @@ namespace ExpenseTrackPro.Application;
 
 public static class ServiceExtensions
 {
-    public static void AddInfrastructure(this IServiceCollection services)
+    public static void AddApplication(this IServiceCollection services)
     {
         //register services
         services.AddScoped<ICategoryService, CategoryService>();

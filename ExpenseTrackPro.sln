@@ -1,12 +1,12 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseTrackPro.Web", "ExpenseTrackPro.Web\ExpenseTrackPro.Web.csproj", "{B8208F2F-E749-413C-99F1-DF51E1F02C1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseTrackPro.Web", "ExpenseTrackPro.Web\ExpenseTrackPro.Web.csproj", "{B8208F2F-E749-413C-99F1-DF51E1F02C1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseTrackPro.Application", "ExpenseTrackPro.Application\ExpenseTrackPro.Application.csproj", "{2B5ECBE4-5B32-477B-860E-DB39F0737976}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseTrackPro.Application", "ExpenseTrackPro.Application\ExpenseTrackPro.Application.csproj", "{2B5ECBE4-5B32-477B-860E-DB39F0737976}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseTraackPro.Domain", "ExpenseTraackPro.Domain\ExpenseTraackPro.Domain.csproj", "{88056C32-5B34-4E82-ABD0-111F621FD999}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseTraackPro.Domain", "ExpenseTraackPro.Domain\ExpenseTraackPro.Domain.csproj", "{88056C32-5B34-4E82-ABD0-111F621FD999}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseTrackPro.Infrastructure", "ExpenseTrackPro.Infrastructure\ExpenseTrackPro.Infrastructure.csproj", "{3C3BEBD9-DE12-4280-9B88-BE1F8F6D1E89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseTrackPro.Infrastructure", "ExpenseTrackPro.Infrastructure\ExpenseTrackPro.Infrastructure.csproj", "{3C3BEBD9-DE12-4280-9B88-BE1F8F6D1E89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
