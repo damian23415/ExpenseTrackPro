@@ -2,7 +2,7 @@
 
 namespace ExpenseTrackPro.Application.DTOs.Auth;
 
-public class AuthenticationRequest
+public class LoginDTO
 {
     [Required]
     public string Email { get; set; }

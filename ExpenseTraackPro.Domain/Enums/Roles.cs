@@ -1,4 +1,4 @@
-﻿namespace ExpenseTrackPro.Application.Enums;
+﻿namespace ExpenseTrackPro.Domain.Enums;
 
 public enum Roles
 {

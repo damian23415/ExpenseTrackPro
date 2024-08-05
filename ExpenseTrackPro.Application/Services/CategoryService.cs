@@ -1,34 +1,31 @@
-using System.Net;
+using AutoMapper;
 using ExpenseTraackPro.Domain.Entities;
+using ExpenseTraackPro.Domain.Interfaces;
 using ExpenseTrackPro.Application.DTOs.Categories;
-using ExpenseTrackPro.Application.Interfaces.IRepository;
-using ExpenseTrackPro.Application.Interfaces.IService;
-using ExpenseTrackPro.Application.Wrappers;
+using ExpenseTrackPro.Application.Interfaces;
 
 namespace ExpenseTrackPro.Application.Services;
 
 public class CategoryService : ICategoryService
 {
-    private readonly ICategoryRepository _categoryRepository;
-    
-    public CategoryService(ICategoryRepository categoryRepository)
+    private readonly IRepository<Category> _categoryRepository;
+    private readonly IMapper _mapper;
+
+    public CategoryService(IRepository<Category> categoryRepository, IMapper mapper)
     {
         _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
-    
-    public async Task<ApiResponse<Category>> AddCategoryAsync(AddCategoryRequest request)
+
+    public async Task CreateCategoryAsync(CategoryDTO categoryDTO)
     {
-        if (string.IsNullOrWhiteSpace(request.Name))
-            return new ApiResponse<Category>($"Parameter {nameof(request.Name)} can't be null",
-                HttpStatusCode.BadRequest);
-        
-        var category = new Category
-        {
-            CategoryName = request.Name
-        };
+        var category = _mapper.Map<Category>(categoryDTO);
+        await _categoryRepository.AddAsync(category);
+    }
 
-        await _categoryRepository.AddCategoryAsync(category);
-
-        return new ApiResponse<Category>(category, "Category added");
+    public async Task<CategoryDTO> GetCategoryByIdAsync(int categoryId)
+    {
+        var category = await _categoryRepository.GetByIdAsync(categoryId);
+        return _mapper.Map<CategoryDTO>(category);
     }
 }

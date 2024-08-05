@@ -1,10 +1,9 @@
-﻿using ExpenseTraackPro.Domain.Entities.Identity;
-using ExpenseTrackPro.Application.Interfaces.IRepository;
+﻿using ExpenseTraackPro.Domain.Entities;
+using ExpenseTraackPro.Domain.Entities.Identity;
+using ExpenseTraackPro.Domain.Interfaces;
 using ExpenseTrackPro.Infrastructure.Context;
 using ExpenseTrackPro.Infrastructure.Repositories;
 using ExpenseTrackPro.Infrastructure.Seeds;
-using ExpenseTrackPro.Infrastructure.Services.Implementations;
-using ExpenseTrackPro.Infrastructure.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,11 +23,8 @@ public static class ServiceExtentions
             .AddRoles<ApplicationRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
-        services.AddTransient<IAccountService, AccountService>();
-        
-        //repos
-        services.AddScoped<ICategoryRepository, CategoryRepository>();
-        
+        services.AddScoped<IRepository<Category>, CategoryRepository>();
+                
         //Seeds roles and users
         DefaultRoles.SeedRolesAsync(services.BuildServiceProvider()).Wait();
         DefaultUsers.SeedUsersAsync(services.BuildServiceProvider()).Wait();

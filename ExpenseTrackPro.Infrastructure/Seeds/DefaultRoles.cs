@@ -1,5 +1,5 @@
 ﻿using ExpenseTraackPro.Domain.Entities.Identity;
-using ExpenseTrackPro.Application.Enums;
+using ExpenseTrackPro.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 

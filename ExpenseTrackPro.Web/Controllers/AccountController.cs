@@ -1,7 +1,5 @@
-﻿using ExpenseTrackPro.Application.DTOs;
-using ExpenseTrackPro.Application.DTOs.Auth;
-using ExpenseTrackPro.Application.DTOs.User;
-using ExpenseTrackPro.Infrastructure.Services.Interfaces;
+﻿using ExpenseTrackPro.Application.DTOs.Auth;
+using ExpenseTrackPro.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,28 +16,54 @@ public class AccountController : ControllerBase
         _accountService = accountService;
     }
     
-    [HttpPost("Authentication")]
-    public async Task<IActionResult> Authentication(AuthenticationRequest authenticationModel, CancellationToken cancellationToken)
+    [HttpPost("authenticate")]
+    public async Task<IActionResult> Authenticate([FromBody] LoginDTO request, CancellationToken cancellationToken)
     {
-        var result = await _accountService.Authenticate(authenticationModel);
-
-        return Ok(result);
+        try
+        {
+            var tokenResponse = await _accountService.Authenticate(request);
+            return Ok(tokenResponse);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(new { message = ex.Message });
+        }
     }
 
-    [HttpPost("RegisterUser")]
-    public async Task<IActionResult> RegisterUser(UserRegisterRequest userRegisterModel, CancellationToken cancellationToken)
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] UserRegisterDTO userRegisterDTO, CancellationToken cancellationToken)
     {
-        var result = await _accountService.RegisterUser(userRegisterModel);
-
-        return Ok(result);
+        try
+        {
+            var response = await _accountService.RegisterUser(userRegisterDTO);
+            return CreatedAtAction(nameof(Register), new { id = response.UserId }, response);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { Message = ex.Message });
+        }
     }
 
     [Authorize]
-    [HttpPost("EditUser")]
-    public async Task<IActionResult> EditUser(UserEditRequest userEditModel, CancellationToken cancellationToken)
+    [HttpPost("edit")]
+    public async Task<IActionResult> Edit([FromBody] UserEditDTO userEditDTO, CancellationToken cancellationToken)
     {
-        var result = await _accountService.EditUser(userEditModel);
-
-        return Ok(result);
+        try
+        {
+            var updatedUser = await _accountService.EditUser(userEditDTO);
+            return Ok(updatedUser);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
     }
 }
