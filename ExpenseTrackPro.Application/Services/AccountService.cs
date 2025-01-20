@@ -38,7 +38,6 @@ namespace ExpenseTrackPro.Application.Services
                 Email = userRegisterDTO.Email,
                 FirstName = userRegisterDTO.FirstName,
                 LastName = userRegisterDTO.LastName,
-                Gender = userRegisterDTO.Gender,
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true
             };
@@ -63,10 +62,12 @@ namespace ExpenseTrackPro.Application.Services
         {
             var user = await _userManager.FindByEmailAsync(loginDTO.Email);
 
+            if (user == null)
+                user = await _userManager.FindByNameAsync(loginDTO.Email);
+            
             if (user == null || !await _userManager.CheckPasswordAsync(user, loginDTO.Password))
                 throw new UnauthorizedAccessException("Invalid email or password.");
-           
-
+            
             var token = await GenerateToken(user);
 
             return new TokenDTO

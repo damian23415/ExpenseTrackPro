@@ -17,7 +17,6 @@ public static class DefaultUsers
         user.Email = "superAdmin@gmail.com";
         user.FirstName = "Damian";
         user.LastName = "Radomski";
-        user.Gender = "Male";
         user.EmailConfirmed = true;
         user.PhoneNumberConfirmed = true;
 

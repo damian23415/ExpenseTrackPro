@@ -14,7 +14,6 @@ public static class ServiceExtentions
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        //register services
         services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(
             configuration.GetConnectionString("Connection")
         ));

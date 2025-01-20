@@ -17,12 +17,12 @@ namespace ExpenseTrackPro.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.16")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ExpenseTraackPro.Domain.Entities.Categories", b =>
+            modelBuilder.Entity("ExpenseTraackPro.Domain.Entities.Category", b =>
                 {
                     b.Property<Guid>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -34,17 +34,17 @@ namespace ExpenseTrackPro.Infrastructure.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("ExpenseTraackPro.Domain.Entities.Expenses", b =>
+            modelBuilder.Entity("ExpenseTraackPro.Domain.Entities.Expense", b =>
                 {
                     b.Property<Guid>("IncomeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
 
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
@@ -116,10 +116,6 @@ namespace ExpenseTrackPro.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -276,9 +272,9 @@ namespace ExpenseTrackPro.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ExpenseTraackPro.Domain.Entities.Expenses", b =>
+            modelBuilder.Entity("ExpenseTraackPro.Domain.Entities.Expense", b =>
                 {
-                    b.HasOne("ExpenseTraackPro.Domain.Entities.Categories", "Categories")
+                    b.HasOne("ExpenseTraackPro.Domain.Entities.Category", "Category")
                         .WithMany("Expenses")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -292,7 +288,7 @@ namespace ExpenseTrackPro.Infrastructure.Migrations
 
                     b.Navigation("ApplicationUsers");
 
-                    b.Navigation("Categories");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -346,7 +342,7 @@ namespace ExpenseTrackPro.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ExpenseTraackPro.Domain.Entities.Categories", b =>
+            modelBuilder.Entity("ExpenseTraackPro.Domain.Entities.Category", b =>
                 {
                     b.Navigation("Expenses");
                 });

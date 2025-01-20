@@ -36,7 +36,7 @@ public class AccountController : ControllerBase
         try
         {
             var response = await _accountService.RegisterUser(userRegisterDTO);
-            return CreatedAtAction(nameof(Register), new { id = response.UserId }, response);
+            return Ok(response);
         }
         catch (Exception ex)
         {
@@ -65,5 +65,11 @@ public class AccountController : ControllerBase
         {
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
+    }
+    
+    [HttpGet("test")]
+    public async Task<IActionResult> Test(CancellationToken cancellationToken)
+    {
+        return Ok("hello");
     }
 }

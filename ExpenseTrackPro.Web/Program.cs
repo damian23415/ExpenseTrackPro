@@ -26,11 +26,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.Urls.Add("http://192.168.0.86:5237"); // or use http://*:5237 to bind to all interfaces
 app.MapControllers();
+app.UseHttpsRedirection();
 
-app.UseCors(x =>
-    x.AllowAnyHeader()
-        .AllowAnyMethod()
-        .AllowAnyOrigin());
+
+app.UseCors("AllowAll");
 app.Run();

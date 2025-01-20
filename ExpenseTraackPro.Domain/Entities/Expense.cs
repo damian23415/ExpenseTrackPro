@@ -13,7 +13,7 @@ public class Expense
     public Guid UserId { get; set; }
     
     [Required]
-    public decimal Amount { get; set; }
+    public double Amount { get; set; }
     
     public string? Description { get; set; }
     
