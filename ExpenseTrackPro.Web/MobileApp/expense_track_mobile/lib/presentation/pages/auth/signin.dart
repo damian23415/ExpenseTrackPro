@@ -69,9 +69,12 @@ class SignIn extends StatelessWidget {
           const SizedBox(height: 50),
 
           //logo
-          const Icon(
-            Icons.money,
-            size: 100,
+          const Image(
+            image: AssetImage(
+              'assets/images/logo.png',
+            ),
+            height: 200,
+            width: 200,
           ),
 
           const SizedBox(height: 50),
